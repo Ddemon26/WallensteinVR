@@ -42,6 +42,12 @@ The `createViews()` function provides:
 - **Configuration Queries**: Automatic enumeration of view configuration properties
 - **Image Management**: Handles swapchain image enumeration and storage
 
+## Validation and Debugging
+
+- Validates requested OpenXR extensions and API layers before instance creation
+- Captures Vulkan warnings and errors using a debug messenger
+- Central `wrapXR` helper translates OpenXR error codes into readable Zig errors
+
 ## Vulkan Device Management
 
 The Vulkan device management is handled in two main components:
