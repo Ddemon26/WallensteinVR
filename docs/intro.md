@@ -11,6 +11,8 @@ and OpenXR for device support.
 - Modular `xr` and `vulkan` components
 - Physical device selection
 - Cross-platform surface support
+- Logical device initialization with queue access
+- Expanded XR helpers and cleaner Vulkan context
 
 Use the Usage Guide for build instructions.
 

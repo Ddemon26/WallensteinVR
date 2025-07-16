@@ -16,4 +16,5 @@ Use the version dropdown in the sidebar to view documentation for other releases
 - [Changelog](versions/1/changelog.md)
 - [Continuous Integration](ci.md)
 - [Spell Check](spellcheck.md)
+- [Architecture](architecture.md)
 
