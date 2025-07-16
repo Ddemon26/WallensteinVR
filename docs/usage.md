@@ -20,3 +20,11 @@ zig build run
 
 The demo opens a window and initializes the VR session.
 
+## Testing
+
+Run the unit tests to verify your environment.
+
+```sh
+zig build test
+```
+
