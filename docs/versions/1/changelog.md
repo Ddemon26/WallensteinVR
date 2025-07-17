@@ -11,3 +11,7 @@
 - Introduced `logicalDevice.zig` to manage queue access
 - Reworked Vulkan and XR modules for clarity and surface support
 - Removed cached build artifacts from version control
+- Added Nix flake for reproducible development shells
+- Removed legacy C and C++ bindings in favor of pure Zig
+- Improved XR-Vulkan integration and debug utilities
+- Fixed several invalid pointer casts and cleanup warnings

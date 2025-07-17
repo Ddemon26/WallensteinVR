@@ -10,6 +10,7 @@ Use the version dropdown in the sidebar to view documentation for other releases
 
 - [Introduction](intro.md)
 - [Usage Guide](usage.md)
+- [Development Environment](dev-env.md)
 
 ### Other
 
