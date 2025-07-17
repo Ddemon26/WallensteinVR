@@ -30,3 +30,7 @@ modify application source code**.
 * Active voice, present tense, ≤ 100‑character lines.
 * Use fenced code blocks and tables only when they improve clarity.
 * Prefer bulleted lists over long paragraphs.
+
+### Restrictions
+
+* Never modify the repository `README.md`.

@@ -14,6 +14,13 @@ This page documents the main Zig modules and their exported functions.
 - **validateExtensions** – checks that requested OpenXR extensions exist.
 - **validateLayers** – checks that requested API layers exist.
 
+### Example
+
+```zig
+var xr = try xr.Context.init(allocator, .{});
+defer xr.deinit();
+```
+
 ## vulkan/context.zig
 
 `Context` wraps the Vulkan instance and device.
@@ -22,6 +29,13 @@ This page documents the main Zig modules and their exported functions.
 - **deinit** – destroys the instance when finished.
 - **createInstance** – internal helper that enables validation and required extensions.
 - **debugCallback** – receives messages from Vulkan validation layers.
+
+### Example
+
+```zig
+var vk_ctx = try vulkan.Context.init(allocator);
+defer vk_ctx.deinit();
+```
 
 ## vulkan/device.zig
 
@@ -33,12 +47,33 @@ This page documents the main Zig modules and their exported functions.
 - **createLogicalDevice** – builds the logical device and retrieves its graphics queue.
 - **findQueueFamilies** – helper to locate the graphics queue family.
 
+### Example
+
+```zig
+var device = try vk.Device.init(allocator, instance);
+defer device.deinit();
+```
+
 ## main.zig
 
 The `main` function wires everything together. It sets up required extensions and layers,
 initializes `xr.Context`, and will later create a Vulkan context.
 
+### Example
+
+```zig
+pub fn main() !void {
+    var xr = try xr.Context.init(allocator, .{});
+    defer xr.deinit();
+    // Vulkan context initialization goes here
+}
+```
+
 ## c.zig
 
 `check` converts C return codes into Zig errors. `wrapXR` maps every OpenXR error code
 into a descriptive Zig error.
+
+```zig
+try c.check(c_some_function());
+```
