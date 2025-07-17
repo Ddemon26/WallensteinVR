@@ -1,6 +1,18 @@
 # 🛠️ WallensteinVR
 
-## ⚙️ Installation
+
+A modular OpenXR/Vulkan VR application built with Zig, featuring robust device management and graphics queue handling.
+
+## Features
+
+- **Complete OpenXR Integration**: Full session management with swapchain support for VR rendering
+- **Robust Vulkan Device Selection**: Automatically selects the best available discrete GPU with geometry shader support
+- **Safe Queue Family Detection**: Implements bounds-checked queue family enumeration with proper error handling
+- **Modular Architecture**: Clean separation between OpenXR session management and Vulkan rendering context
+- **VR Swapchain Management**: Handles multiple swapchains with Vulkan image integration for stereo rendering
+- **Comprehensive Logging**: Detailed debug output for device selection and queue family detection
+
+## Installation
 
 _NOTE: The <a href="https://vulkan.lunarg.com/sdk/home" target="_blank"><img src="https://vulkan.lunarg.com/img/vulkan/vulkan-red.svg" height="22" style="vertical-align: text-bottom"/> SDK</a> is required._
 

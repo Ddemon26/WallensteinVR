@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WallensteinVR Documentation</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<button id="theme-toggle" class="theme-toggle">Dark Mode</button>
+<div class="layout">
+    <aside class="sidebar">
+        <nav class="nav">
+            <h2>Documentation</h2>
+            <label for="version-select" class="version-label">Version:</label>
+            <select id="version-select">
+                <option value="1" selected>1.0.1</option>
+            </select>
+            <ul>
+                <li class="category"><span>Getting Started</span>
+                    <ul>
+                        <li><a href="#" data-md="intro.md">Introduction</a></li>
+                        <li><a href="#" data-md="usage.md">Usage Guide</a></li>
+                    </ul>
+                </li>
+                <li class="category"><span>Other</span>
+                    <ul>
+                        <li><a href="#" data-md="ci.md">Continuous Integration</a></li>
+                        <li><a href="#" data-md="spellcheck.md">Spell Check</a></li>
+                        <li><a href="#" data-md="architecture.md">Architecture</a></li>
+                        <li><a href="#" data-md="api.md">API Reference</a></li>
+                        <li><a href="#" data-md="versions/1/changelog.md">Changelog</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <div id="content">
+            <header>
+                <h1>Documentation</h1>
+                <p>Welcome to the documentation. Use the sidebar to explore the available guides and features.</p>
+            </header>
+        </div>
+    </main>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const contentDiv = document.getElementById('content');
+        const navLinks = document.querySelectorAll('.nav a');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeLink = document.querySelector('link[rel="stylesheet"]');
+        const versionSelect = document.getElementById('version-select');
+        const categories = document.querySelectorAll('.category');
+        let currentVersion = versionSelect.value;
+
+        // Apply saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            themeLink.setAttribute('href', 'index-dark.css');
+            themeToggle.textContent = 'Light Mode';
+        }
+
+        // Function to load and render markdown
+        async function loadMarkdown(file) {
+            try {
+                const response = await fetch(file);
+                if (!response.ok) throw new Error('Failed to load markdown file');
+                const markdown = await response.text();
+                contentDiv.innerHTML = marked.parse(markdown);
+            } catch (error) {
+                contentDiv.innerHTML = '<h1>Error</h1><p>Could not load the documentation page.</p>';
+            }
+        }
+
+        // Handle nav link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const mdFile = link.getAttribute('data-md');
+                loadMarkdown(mdFile);
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Handle category toggle
+        categories.forEach(category => {
+            const span = category.querySelector('span');
+            span.addEventListener('click', () => {
+                category.classList.toggle('open');
+            });
+        });
+
+        versionSelect.addEventListener('change', () => {
+            currentVersion = versionSelect.value;
+            const active = document.querySelector('.nav a.active');
+            if (active) {
+                loadMarkdown(active.dataset.md);
+            }
+        });
+
+        // Toggle light/dark mode
+        themeToggle.addEventListener('click', () => {
+            const current = themeLink.getAttribute('href');
+            if (current === 'index.css') {
+                themeLink.setAttribute('href', 'index-dark.css');
+                themeToggle.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeLink.setAttribute('href', 'index.css');
+                themeToggle.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Load default page (intro.md by default)
+        const defaultLink = document.querySelector('.nav a[data-md="intro.md"]');
+        if (defaultLink) {
+            defaultLink.classList.add('active');
+            loadMarkdown('intro.md');
+            // Open the "Getting Started" category by default
+            const gettingStarted = document.querySelector('.category:first-child');
+            if (gettingStarted) {
+                gettingStarted.classList.add('open');
+            }
+        }
+    });
+</script>
+</body>
+</html>

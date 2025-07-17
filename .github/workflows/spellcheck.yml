@@ -1,0 +1,22 @@
+name: Docs Spell Check
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '.github/workflows/spellcheck.yml'
+  workflow_dispatch:
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install codespell
+        run: pip install codespell
+      - name: Run codespell
+        run: codespell -q 3 docs/ -S docs/codex/AGENTS.md
